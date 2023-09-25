@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { FoodForm } from './components/foodForm';
+import { FoodList } from './components/foodList';
 
 function App() {
+  const [text, setText] = useState('');
+  const [foods, setFoods] = useState([]);
+
+  const removeFood = (id) => {
+    const filter = foods.filter((food) => food.id !== id);
+
+    setFoods(filter);
+  };
+
+  const searchFood = foods.filter((food) => food.name.toLowerCase().includes(text.toLowerCase()));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <FoodForm setFoods={setFoods} foods={foods} text={text} setText={setText} />
+      <FoodList foods={foods} remove={removeFood} text={text} searchFood={searchFood} />
     </div>
   );
 }
